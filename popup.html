@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chrome Window Resizer</title>
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+        <style>
+            body {
+                width: 250px;
+            }
+            .panel {
+                margin-bottom: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <script id="size-template" type="text/x-handlebars-template">
+            <button class="btn btn-primary btn-small btn-block size" data-x="{{ x }}" data-y="{{ y }}">{{ human }}</button>
+        </script>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Window Resizer</h3>
+            </div>
+            <div class="panel-body">
+                <div id="sizes"></div>
+                <p>
+                    Created by <a href="https://github.com/LawfulGood">LawfulGood</a><br>
+                    We promise this addon wi
+                </p>
+            </div>
+        </div>
+
+        <script src="/assets/js/handlebars-v1.3.0.js"></script>
+        <script src="/assets/js/resizer.js"></script>
+    </body>
+</html>
