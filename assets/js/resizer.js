@@ -29,10 +29,6 @@
 			width: 1920,
 			height: 1080
 		},
-		'1920x720': {
-			width: 1920,
-			height: 720
-		},
 		'Fullscreen': {
 			state: 'maximized'
 		}
