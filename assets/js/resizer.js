@@ -36,16 +36,40 @@
 
 
 	var sizesDiv = document.getElementById('sizes');
-	for(var k in sizes) {
-		if(!sizes.hasOwnProperty(k)) continue;
+	var outerHeight, innerHeight, heightDelta;
 
-		var newElement = document.createElement('button');
-		newElement.className = 'btn btn-primary btn-small btn-block size';
-		newElement.innerText = k;
-		newElement.onclick = function () {
-			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, sizes[this.innerText]);
-		};
+	chrome.windows.get(chrome.windows.WINDOW_ID_CURRENT, function(w){
+		outerHeight = w.height;
+		if(innerHeight) {
+			populatePopup();
+		}
+	});
 
-		sizesDiv.appendChild(newElement);
+	chrome.tabs.query({active: true},function(t){
+		innerHeight = t[0].height;
+		if(outerHeight) {
+			populatePopup();
+		}
+	});
+
+
+	function populatePopup() {
+		// calculate the difference between inner and outer height to get chrome height
+		heightDelta = outerHeight - innerHeight;
+
+		for(var k in sizes) {
+			// update height to fix vertical loss due to window chrome
+			sizes[k].height += heightDelta;
+			if(!sizes.hasOwnProperty(k)) continue;
+			var newElement = document.createElement('button');
+			newElement.className = 'btn btn-primary btn-small btn-block size';
+			newElement.innerText = k;
+			newElement.onclick = function () {
+				chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, sizes[this.innerText]);
+			};
+
+			sizesDiv.appendChild(newElement);
+		}
+
 	}
 })();
