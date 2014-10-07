@@ -29,6 +29,10 @@
 			width: 1920,
 			height: 1080
 		},
+		'1920x720': {
+			width: 1920,
+			height: 720
+		},
 		'Fullscreen': {
 			state: 'maximized'
 		}
@@ -40,6 +44,7 @@
 	var customBtn = document.querySelector("#set-custom");
 	var customWidth = document.querySelector("#custom-width");
 	var customHeight = document.querySelector("#custom-height");
+	var sizeInner = document.querySelector('#size-inner');
 
 	chrome.windows.get(chrome.windows.WINDOW_ID_CURRENT, function(w){
 		outerHeight = w.height;
@@ -57,15 +62,21 @@
 
 
 	function populatePopup() {
+		// calculate height lost to window chrome
 		heightDelta = outerHeight - innerHeight;
+
 		// setup custom size button
 		customBtn.onclick = function() {
-			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, {width:Number(customWidth.value), height:Number(customHeight.value)});
+			var w = Number(customWidth.value);
+			var h = Number(customHeight.value);
+			if(sizeInner.checked) {
+				h += heightDelta;
+			}
+
+			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, {width: w, height: h});
 		}
 
 		for(var k in sizes) {
-
-			sizes[k].height += heightDelta;
 
 			if(!sizes.hasOwnProperty(k)) continue;
 
@@ -73,11 +84,21 @@
 			newElement.className = 'btn btn-primary btn-small btn-block size';
 			newElement.innerText = k;
 			newElement.onclick = function () {
-				chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, sizes[this.innerText]);
+				var settingsObj = {};
+				if(sizes[this.innerText].height) {
+					settingsObj.width = sizes[this.innerText].width;
+					settingsObj.height = sizes[this.innerText].height;
+					if(sizeInner.checked) {
+						settingsObj.height += heightDelta;
+					}
+				}
+				else {
+					settingsObj = sizes[this.innerText];
+				}
+				chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, settingsObj);
 			};
 
 			sizesDiv.appendChild(newElement);
 		}
-
 	}
 })();
