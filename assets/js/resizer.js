@@ -37,6 +37,9 @@
 
 	var sizesDiv = document.getElementById('sizes');
 	var outerHeight, innerHeight, heightDelta;
+	var customBtn = document.querySelector("#set-custom");
+	var customWidth = document.querySelector("#custom-width");
+	var customHeight = document.querySelector("#custom-height");
 
 	chrome.windows.get(chrome.windows.WINDOW_ID_CURRENT, function(w){
 		outerHeight = w.height;
@@ -54,13 +57,18 @@
 
 
 	function populatePopup() {
-		// calculate the difference between inner and outer height to get chrome height
 		heightDelta = outerHeight - innerHeight;
+		// setup custom size button
+		customBtn.onclick = function() {
+			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, {width:Number(customWidth.value), height:Number(customHeight.value)});
+		}
 
 		for(var k in sizes) {
-			// update height to fix vertical loss due to window chrome
+
 			sizes[k].height += heightDelta;
+
 			if(!sizes.hasOwnProperty(k)) continue;
+
 			var newElement = document.createElement('button');
 			newElement.className = 'btn btn-primary btn-small btn-block size';
 			newElement.innerText = k;
