@@ -1,28 +1,60 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Chrome Window Resizer</title>
-        <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
-        <style>
-            body {
-                width: 250px;
-            }
-            .panel {
-                margin-bottom: 0;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Window Resizer</h3>
-            </div>
-            <div class="panel-body">
-                <div id="sizes"></div>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chrome Window Resizer</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <style>
+    body {
+        width: 250px;
+    }
+    .panel {
+        margin-bottom: 0;
+    }
+    #custom {
+        margin: 0 0 5px 0;
+    }
+    #custom input {
+        width: 70px;
+        float: left;
+        border-radius: 3px;
+        height: 30px;
+    }
+    #custom button {
+        width: 49px;
+        float: right;
+        display: block;
+        margin: 0 0 5px 0;
+    }
+    #custom span {
+        display: block;
+        float: left;
+        width: 20px;
+        line-height: 30px;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Window Resizer</h3>
+        </div>
+        <div class="panel-body">
+            <div id="sizes">
+                <div id="custom">
+                    <input type="number" id="custom-width" value="1280" step="1">
+                    <span>X</span>
+                    <input type="number" id="custom-height" value="720" step="1">
+                    <button id="set-custom" class="btn btn-primary btn-small btn-block size">Set</button>
+                </div>
             </div>
         </div>
+    </div>
 
-        <script src="/assets/js/resizer.js"></script>
-    </body>
+    <script src="/assets/js/resizer.js"></script>
+</body>
+
 </html>
