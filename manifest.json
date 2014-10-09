@@ -1,6 +1,6 @@
 {
 	"name": "Window Resizer",
-	"version": "0.2",
+	"version": "0.3",
 	"manifest_version": 2,
 	"description": "Resize Google Chrome windows.",
 	"update_url": "http://clients2.google.com/service/update2/crx",

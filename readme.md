@@ -13,6 +13,12 @@ us on Gittip. (Personal Account for now: https://gittip.com/clone1018)
 
 ### Release Notes
 
+#### 0.3
+
+ - Custom Size
+ - Inner Window or Outer Window selector
+ - Inner Window is now default
+
 #### 0.2
 
  - Fullscreen
