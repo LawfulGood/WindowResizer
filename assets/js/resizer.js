@@ -36,16 +36,65 @@
 
 
 	var sizesDiv = document.getElementById('sizes');
-	for(var k in sizes) {
-		if(!sizes.hasOwnProperty(k)) continue;
+	var outerHeight, innerHeight, heightDelta;
+	var customBtn = document.querySelector("#set-custom");
+	var customWidth = document.querySelector("#custom-width");
+	var customHeight = document.querySelector("#custom-height");
+	var sizeInner = document.querySelector('#size-inner');
 
-		var newElement = document.createElement('button');
-		newElement.className = 'btn btn-primary btn-small btn-block size';
-		newElement.innerText = k;
-		newElement.onclick = function () {
-			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, sizes[this.innerText]);
-		};
+	chrome.windows.get(chrome.windows.WINDOW_ID_CURRENT, function(w){
+		outerHeight = w.height;
+		if(innerHeight) {
+			populatePopup();
+		}
+	});
 
-		sizesDiv.appendChild(newElement);
+	chrome.tabs.query({active: true},function(t){
+		innerHeight = t[0].height;
+		if(outerHeight) {
+			populatePopup();
+		}
+	});
+
+
+	function populatePopup() {
+		// calculate height lost to window chrome
+		heightDelta = outerHeight - innerHeight;
+
+		// setup custom size button
+		customBtn.onclick = function() {
+			var w = Number(customWidth.value);
+			var h = Number(customHeight.value);
+			if(sizeInner.checked) {
+				h += heightDelta;
+			}
+
+			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, {width: w, height: h});
+		}
+
+		for(var k in sizes) {
+
+			if(!sizes.hasOwnProperty(k)) continue;
+
+			var newElement = document.createElement('button');
+			newElement.className = 'btn btn-primary btn-small btn-block size';
+			newElement.innerText = k;
+			newElement.onclick = function () {
+				var settingsObj = {};
+				if(sizes[this.innerText].height) {
+					settingsObj.width = sizes[this.innerText].width;
+					settingsObj.height = sizes[this.innerText].height;
+					if(sizeInner.checked) {
+						settingsObj.height += heightDelta;
+					}
+				}
+				else {
+					settingsObj = sizes[this.innerText];
+				}
+				chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, settingsObj);
+			};
+
+			sizesDiv.appendChild(newElement);
+		}
 	}
 })();
