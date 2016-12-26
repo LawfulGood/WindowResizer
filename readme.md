@@ -9,7 +9,7 @@ developer & user functionality, without clogging your browser up with
 spyware, malware or other trash.
 
 If you'd like to support our time spent on this project, considering funding
-us on Gittip. (Personal Account for now: https://gittip.com/clone1018)
+us on [Gratipay](https://gratipay.com/LawfulGood). 
 
 ### Release Notes
 
