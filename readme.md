@@ -1,5 +1,4 @@
-Lawfully Good Window Resizer
-############################
+### Lawful Good Window Resizer
 
 Window Resizer is a utility to allow you to easily resize Google Chrome windows
 to specific sizes.
